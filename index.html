@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LostPackageCourt - Hakim AI Paket Hilang</title>
+<style>
+  *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  body{margin:0;background:#0f172a;color:#e2e8f0}
+  a{color:#38bdf8}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 16px 60px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .badge{background:#1e293b;border:1px solid #334155;padding:6px 10px;border-radius:999px;font-size:12px}
+  .badge b{color:#4ade80}
+  h1{font-size:32px;line-height:1.1;margin:18px 0 6px}
+  h1 span{color:#38bdf8}
+  p.sub{color:#94a3b8;margin:0 0 20px;line-height:1.6}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr} h1{font-size:26px}}
+  .card{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:18px}
+  .card h2{margin:0 0 4px;font-size:18px}
+  .card p{color:#94a3b8;font-size:13px;line-height:1.5;margin:0 0 14px}
+  label{font-size:12px;color:#cbd5e1;display:block;margin:12px 0 6px;font-weight:600}
+  input,textarea{width:100%;background:#0f172a;border:1px solid #334155;color:white;border-radius:10px;padding:11px 12px;font-size:14px;outline:none}
+  textarea{min-height:70px;resize:vertical}
+  input:focus,textarea:focus{border-color:#38bdf8}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  button{width:100%;border:0;border-radius:10px;padding:13px;font-weight:700;cursor:pointer;font-size:14px;margin-top:14px}
+  .btn-blue{background:#0284c7;color:white}
+  .btn-green{background:#16a34a;color:white}
+  .btn-yellow{background:#eab308;color:black}
+  .btn-ghost{background:transparent;border:1px solid #334155;color:#e2e8f0}
+  .result{margin-top:16px;border-radius:12px;padding:16px;display:none}
+  .result.LOST{background:#450a0a;border:1px solid #ef4444}
+  .result.DELIVERED{background:#052e16;border:1px solid #22c55e}
+  .result.INCONCLUSIVE{background:#422006;border:1px solid #eab308}
+  .result h3{margin:0 0 6px;font-size:20px}
+  .result pre{white-space:pre-wrap;font-size:13px;line-height:1.5;margin:8px 0 0;color:#e2e8f0}
+  .examples{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  @media(max-width:760px){.examples{grid-template-columns:1fr}}
+  .ex{background:#020617;border:1px solid #1e293b;border-radius:12px;padding:14px;font-size:13px;line-height:1.6}
+  .ex b{color:white}
+  .pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700}
+  .pill.red{background:#ef4444;color:white}.pill.green{background:#22c55e;color:black}
+  .mono{font-family:ui-monospace,monospace;font-size:12px;word-break:break-all;color:#94a3b8}
+  .foot{margin-top:22px;color:#64748b;font-size:12px;line-height:1.6;text-align:center}
+  details{margin-top:10px}.hint{font-size:12px;color:#94a3b8;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="badge">⚖️ GenLayer • Intelligent Contract</div>
+    <div class="badge">Contract: <b>0x60...Bf2B • FINALIZED</b></div>
+  </div>
+
+  <h1>LostPackageCourt<br><span>Hakim AI untuk Paket Hilang.</span></h1>
+  <p class="sub">Buyer lapor paket hilang, seller kasih bukti kirim. Hakim AI baca bukti dari <b>GitHub Gist (RAW URL)</b>, cek kata kunci <b>DELIVERED / STUCK / LOST</b>, lalu putusin refund 100%, 0%, atau 50% — tanpa bisa disuap, tanpa nunggu CS berhari-hari.</p>
+
+  <div class="grid">
+    <!-- LEFT: FORM -->
+    <div class="card">
+      <h2>1. Buat Klaim Baru</h2>
+      <p>Isi kayak di GenLayer Studio. Pake RAW URL Gist: <span class="mono">gist.githubusercontent.com/.../raw/...</span></p>
+
+      <label>Seller (Wallet Address)</label>
+      <input id="seller" value="0x917945bC27A29A6E43221...">
+
+      <div class="row">
+        <div><label>Order ID</label><input id="order_id" value="TOKOPEDIA-INV-9940"></div>
+        <div><label>Courier</label><input id="courier" value="JNE REG"></div>
+      </div>
+
+      <label>Tracking URL (Gist RAW)</label>
+      <input id="tracking_url" placeholder="https://gist.githubusercontent.com/.../tracking.txt">
+      <label>Buyer Evidence URL (Gist RAW)</label>
+      <input id="buyer_url" placeholder="https://gist.githubusercontent.com/.../buyer.txt">
+      <label>Buyer Description</label>
+      <textarea id="buyer_desc">Saya pesan sepatu, sudah 10 hari status tracking stuck di gudang sortir Jakarta tidak bergerak. Sudah chat seller 3x tidak dibalas. Minta refund penuh karena paket hilang.</textarea>
+
+      <div class="row">
+        <div><label>Claim Amount (Rp)</label><input id="amount" type="number" value="150000"></div>
+        <div><label>Claim ID (Simulasi)</label><input id="claim_id" type="number" value="2"></div>
+      </div>
+
+      <button class="btn-blue" onclick="createClaim()">+ Create Claim</button>
+      <div id="createdMsg" class="hint" style="margin-top:10px"></div>
+
+      <hr style="border:0;border-top:1px solid #334155;margin:18px 0">
+
+      <h2>2. Seller Kasih Bukti</h2>
+      <p>Khusus buat tes DELIVERED. Isi Gist seller yang ada kata DELIVERED / DITERIMA / TANDA TANGAN.</p>
+      <label>Seller Evidence URL (Gist RAW)</label>
+      <input id="seller_url" placeholder="https://gist.githubusercontent.com/.../seller.txt">
+      <button class="btn-green" onclick="addSeller()">+ Add Seller Evidence</button>
+
+      <hr style="border:0;border-top:1px solid #334155;margin:18px 0">
+
+      <h2>3. Sidang Hakim AI</h2>
+      <p>Hakim bakal fetch 3 Gist lu, baca isinya, dan putusin cuma 1 kata: LOST / DELIVERED / INCONCLUSIVE.</p>
+      <button class="btn-yellow" onclick="resolveClaim()">⚖️ Resolve Claim - Jalankan Hakim AI</button>
+      <div id="loading" class="hint" style="display:none;margin-top:10px">⏳ Hakim AI lagi baca Gist lu... (fetch tracking + buyer + seller)</div>
+
+      <div id="result" class="result"><h3 id="rTitle"></h3><div id="rMeta"></div><pre id="rJson"></pre></div>
+    </div>
+
+    <!-- RIGHT: BUKTI NYATA -->
+    <div>
+      <div class="card">
+        <h2>Bukti On-Chain (Sudah FINALIZED)</h2>
+        <p>Ini hasil beneran dari GenLayer Studio, bukan karangan.</p>
+        <div class="examples">
+          <div class="ex"><span class="pill red">LOST • 100%</span><br><br><b>TOKOPEDIA-INV-9940</b><br>Claim ID: 0<br>Tracking: STUCK 10 hari<br>Seller: No Evidence<br><b>Refund: Rp 150.000</b></div>
+          <div class="ex"><span class="pill green">DELIVERED • 0%</span><br><br><b>TOKOPEDIA-INV-9941</b><br>Claim ID: 1<br>Seller: DELIVERED / DITERIMA<br>Tanda tangan: ADA<br><b>Refund: Rp 0</b></div>
+        </div>
+        <button class="btn-ghost" onclick="window.open('https://studio.genlayer.com','_blank')">↗ Lihat Kontrak Asli di GenLayer Studio</button>
+        <details><summary style="cursor:pointer;font-size:13px;margin-top:10px">Cara bikin Gist yang benar</summary><div class="hint" style="margin-top:8px">1. Buka gist.github.com → New gist → Public<br>2. Isi file .txt, misal: STUCK, TIDAK DITEMUKAN / DELIVERED, DITERIMA, TANDA TANGAN<br>3. Pencet tombol <b>Raw</b> → copy URL yang <b>gist.githubusercontent.com/.../raw/...</b><br>4. Jangan pake URL gist.github.com yang halaman HTML, itu gak kebaca AI.</div></details>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>Aturan Hakim (V5 Final)</h2>
+        <p style="margin-bottom:0;line-height:1.7">
+        <b style="color:white">RULE 1 - DELIVERED:</b> Gist seller ada kata DELIVERED / DITERIMA / TANDA TANGAN / SUDAH SAMPAI → Refund 0%<br><br>
+        <b style="color:white">RULE 2 - LOST:</b> Gist tracking / buyer ada kata STUCK / LOST / HILANG / TIDAK DITEMUKAN + seller NO_EVIDENCE → Refund 100%<br><br>
+        <b style="color:white">RULE 3 - INCONCLUSIVE:</b> Gak ada keyword jelas → Refund 50%<br><br>
+        Kenapa keyword? Supaya semua validator GenLayer sepakat 1 kata, gak jadi UNDETERMINED kayak kalo reasoning-nya bebas.
+        </p>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2>Coba Tanpa Gist? Klik Demo Cepat</h2>
+        <p>Buat yang males bikin Gist dulu.</p>
+        <button class="btn-ghost" onclick="loadDemo('LOST')">Demo Kasus LOST</button>
+        <button class="btn-ghost" onclick="loadDemo('DELIVERED')" style="margin-top:8px">Demo Kasus DELIVERED</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">LostPackageCourt • Built on GenLayer Intelligent Contract • Frontend demo di GitHub Pages, verifikasi on-chain di GenLayer Studio • Buyer & Seller evidence via GitHub Gist RAW URL</div>
+</div>
+
+<script>
+let claim = null;
+let sellerEvidence = "";
+
+async function fetchText(url){
+  if(!url) return "NO_EVIDENCE";
+  try{
+    const r = await fetch(url);
+    if(!r.ok) return "LOAD_FAILED";
+    const t = await r.text();
+    return t.slice(0,3500) || "EMPTY_PAGE";
+  }catch(e){ return "LOAD_FAILED"; }
+}
+function createClaim(){
+  const order = document.getElementById('order_id').value;
+  const amt = parseInt(document.getElementById('amount').value||"0");
+  claim = {order_id:order, amount:amt};
+  sellerEvidence = "";
+  document.getElementById('createdMsg').innerHTML = `✅ Claim dibuat! <b>${order}</b> • Status: <b>OPEN</b> • Claim Amount: Rp ${amt.toLocaleString('id-ID')}<br>Silakan isi Seller Evidence (opsional) lalu Resolve.`;
+  document.getElementById('result').style.display='none';
+}
+function addSeller(){
+  sellerEvidence = document.getElementById('seller_url').value.trim();
+  if(!sellerEvidence){ alert("Isi dulu Seller Evidence URL (Gist RAW)"); return; }
+  alert("✅ Seller Evidence ditambahkan!\n" + sellerEvidence);
+}
+async function resolveClaim(){
+  if(!claim){ alert("Buat Claim dulu!"); return; }
+  document.getElementById('loading').style.display='block';
+  document.getElementById('result').style.display='none';
+
+  const trackingUrl = document.getElementById('tracking_url').value.trim();
+  const buyerUrl = document.getElementById('buyer_url').value.trim();
+  const buyerDesc = document.getElementById('buyer_desc').value;
+
+  // Kalo user pake Demo, pake teks demo. Kalo pake Gist beneran, fetch beneran.
+  let buyerText = window._demoBuyer || await fetchText(buyerUrl);
+  let trackingText = window._demoTracking || await fetchText(trackingUrl);
+  let sellerText = window._demoSeller !== undefined ? window._demoSeller : await fetchText(sellerEvidence);
+  if(!sellerEvidence && !window._demoSeller) sellerText = "NO_EVIDENCE";
+
+  const allSeller = (sellerText||"").toUpperCase();
+  const allTrack = ((trackingText||"")+" "+(buyerText||"")).toUpperCase();
+
+  let verdict = "INCONCLUSIVE", pct = 50, reasoning = "";
+  const deliveredKeys = ["DELIVERED","DITERIMA","TANDA TANGAN","SIGNED","SUDAH SAMPAI","RECEIVED","PROOF OF DELIVERY"];
+  const lostKeys = ["STUCK","LOST","HILANG","TIDAK DITEMUKAN","NOT FOUND","TIDAK BERGERAK","NO UPDATE","RETURNED"];
+
+  if(deliveredKeys.some(k=>allSeller.includes(k))){
+    verdict="DELIVERED"; pct=0; reasoning="Seller evidence contains DELIVERED / DITERIMA / proof of delivery. Package delivered. Refund 0%.";
+  } else if(lostKeys.some(k=>allTrack.includes(k)) && (sellerText==="NO_EVIDENCE"||sellerText==="LOAD_FAILED"||sellerText==="EMPTY_PAGE"||!sellerEvidence)){
+    verdict="LOST"; pct=100; reasoning="Evidence shows tracking STUCK / LOST, no seller delivery proof found. Refund 100%.";
+  } else {
+    verdict="INCONCLUSIVE"; pct=50; reasoning="Evidence does not contain clear DELIVERED or LOST keywords. Refund 50%.";
+  }
+
+  const refund = Math.floor(claim.amount * pct / 100);
+  document.getElementById('loading').style.display='none';
+  const box = document.getElementById('result');
+  box.style.display='block'; box.className='result '+verdict;
+  document.getElementById('rTitle').innerText = verdict==="LOST" ? "❌ LOST - Refund 100%" : verdict==="DELIVERED" ? "✅ DELIVERED - Refund 0%" : "⚠️ INCONCLUSIVE - Refund 50%";
+  document.getElementById('rMeta').innerHTML = `<b>Order:</b> ${claim.order_id} &nbsp;•&nbsp; <b>Status:</b> RESOLVED &nbsp;•&nbsp; <b>Refund:</b> Rp ${refund.toLocaleString('id-ID')}`;
+  document.getElementById('rJson').innerText = JSON.stringify({order_id:claim.order_id,status:"RESOLVED",verdict:verdict,refund_amount:String(refund),reasoning:reasoning,buyer_evidence_preview:buyerText.slice(0,200),tracking_preview:trackingText.slice(0,200),seller_preview:sellerText.slice(0,200)},null,2);
+}
+function loadDemo(type){
+  window._demoBuyer = type==="LOST" ? "BUKTI BUYER - Chat ke seller: Min paket mana? Udah 10 hari gak gerak. Chat ke JNE: Paket TIDAK DITEMUKAN di gudang sortir Jakarta. Status: STUCK, TIDAK BERGERAK, NO UPDATE 10 HARI" : "BUKTI BUYER - Saya pesan sepatu, katanya belum sampai.";
+  window._demoTracking = type==="LOST" ? "TRACKING JNE - 03 Nov: Paket diterima gudang Jakarta. 05-13 Nov: STUCK, TIDAK BERGERAK, NO UPDATE. Status akhir: STUCK / LOST" : "TRACKING JNE - Paket sudah sampai";
+  window._demoSeller = type==="DELIVERED" ? "BUKTI PENGIRIMAN SELLER - Foto paket: Ada. Foto resi JNE: Ada. Tanda tangan penerima: ADA. Status: DELIVERED, SUDAH SAMPAI, DITERIMA tanggal 12 Nov. Proof of Delivery: LENGKAP" : "NO_EVIDENCE";
+  document.getElementById('order_id').value = type==="LOST" ? "TOKOPEDIA-INV-9940" : "TOKOPEDIA-INV-9941";
+  document.getElementById('amount').value = type==="LOST" ? "150000" : "200000";
+  document.getElementById('tracking_url').value = "Demo mode - pake teks demo, gak perlu Gist";
+  document.getElementById('buyer_url').value = "Demo mode - pake teks demo, gak perlu Gist";
+  document.getElementById('seller_url').value = type==="DELIVERED" ? "Demo mode - seller ada bukti DELIVERED" : "";
+  sellerEvidence = type==="DELIVERED" ? "demo" : "";
+  createClaim();
+  alert(type==="LOST" ? "Demo LOST dimuat! Langsung klik Resolve, harusnya LOST refund 100%." : "Demo DELIVERED dimuat! Langsung klik Resolve, harusnya DELIVERED refund 0%.");
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
